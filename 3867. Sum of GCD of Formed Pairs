@@ -1,0 +1,38 @@
+class Solution {
+    public int gcd(int a  , int b){
+        while ( b != 0){
+            
+            int temp = b;
+            b = a % b;
+            a = temp;
+        }
+        // return gcd(b , a %b);
+        return a;
+    }
+    public long gcdSum(int[] nums) {
+        int n = nums.length;
+        int max = Integer.MIN_VALUE;
+        int[] prefixGcd = new int[n];
+
+        for(int i = 0 ; i < n  ; i++){
+            max = Math.max(nums[i] , max);
+
+            prefixGcd[i] = gcd(nums[i] , max);
+        }
+        long ans = 0;
+        Arrays.sort(prefixGcd);
+
+        int left = 0 ;
+        int right  = n -1 ;
+
+        // for(int i = 0 ; i < n ; i++){
+        //     for (int j = n-1 ; j > i ; j-- ){
+        while( left < right){
+                ans += gcd(prefixGcd[left] , prefixGcd[right]);
+                left++;
+                right--;
+           
+        }
+        return ans;
+    }
+}
